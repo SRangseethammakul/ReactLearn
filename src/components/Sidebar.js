@@ -8,6 +8,15 @@ const Sidebar = () => {
         setFullname('Suttipong');
         setIsShow(!isShow);
     }
+    React.useEffect(() => {
+        console.log("use effect");
+    });
+    React.useEffect(() => {
+        console.log("use effect one time");
+    }, []);
+    React.useEffect(() => {
+        console.log(`sidebar useEffect => ${fullName}`);
+    }, [fullName]);
     return (
         <>
             <h3>Side Bar {fullName}</h3>
