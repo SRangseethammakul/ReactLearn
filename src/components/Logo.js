@@ -1,13 +1,18 @@
 import React from 'react'
 import {logo} from '../styles/style'
+import useHover from '../hooks/useHover'
 const Logo = () => {
+    const [hover, attrs] = useHover()
     const logoImage = {
         url : './logo192.png'
     };
     return (
         <div>
             {/* <img src="" /> */}
-            <img style={logo} src={logoImage.url} width="100" />
+            {
+                hover ? <h3>Hello</h3> : null
+            }
+            <img style={logo} {...attrs} src={logoImage.url} width="100" />
         </div>
     )
 }
