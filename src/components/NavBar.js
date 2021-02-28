@@ -1,10 +1,12 @@
-import React from "react";
+import React from "react"
+import {} from 'react-router-dom'
 import { Navbar, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap'
+import { NavLink } from "react-router-dom";
 const NavBar = () => {
   return (
     <>
       <Navbar bg="success" expand="lg">
-        <Navbar.Brand href="#home">
+        <NavLink className="navbar-brand" to="/" exact>
         <img
             src="./logo192.png"
             width="30"
@@ -13,12 +15,20 @@ const NavBar = () => {
             alt="React Bootstrap logo"
         />
         {' '}Suttipong
-        </Navbar.Brand>
+        </NavLink>
+        {/* <Navbar.Brand href="#home">
+
+        
+        </Navbar.Brand> */}
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
-            <Nav.Link href="#home">Suttipong</Nav.Link>
-            <Nav.Link href="#link">Link</Nav.Link>
+            <NavLink className="nav-link" to="/" exact activeClassName="active">
+            Suttipong HOME
+            </NavLink>
+            <NavLink className="nav-link" to="/about" exact activeClassName="active">
+            เกี่ยวกับเรา
+            </NavLink>
             <NavDropdown title="Dropdown" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">
