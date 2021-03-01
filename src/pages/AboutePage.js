@@ -26,7 +26,6 @@ const AboutePage = () => {
                             </p>
                         )
                     }
-
                 </div>
             </div>
         </div>

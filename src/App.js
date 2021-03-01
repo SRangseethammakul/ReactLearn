@@ -8,7 +8,9 @@ import {
 import Footer from './components/Footer'
 import NavBar from './components/NavBar'
 import AboutePage from './pages/AboutePage'
+import DetailPage from './pages/DetailPage'
 import HomePage from './pages/HomePage'
+import ProductPage from './pages/ProductPage'
 function App() {
   return (
     <Router>
@@ -19,6 +21,12 @@ function App() {
         </Route>
         <Route path="/about">
           <AboutePage />
+        </Route>
+        <Route path="/product">
+          <ProductPage />
+        </Route>
+        <Route path="/detail">
+          <DetailPage />
         </Route>
       </Switch>
     <Footer />

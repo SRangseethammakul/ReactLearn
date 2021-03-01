@@ -26,8 +26,11 @@ const NavBar = () => {
             <NavLink className="nav-link" to="/" exact activeClassName="active">
             Suttipong HOME
             </NavLink>
-            <NavLink className="nav-link" to="/about" exact activeClassName="active">
+            <NavLink className="nav-link" to="/about"  activeClassName="active">
             เกี่ยวกับเรา
+            </NavLink>
+            <NavLink className="nav-link" to="/product"  activeClassName="active">
+            สินค้า
             </NavLink>
             <NavDropdown title="Dropdown" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
