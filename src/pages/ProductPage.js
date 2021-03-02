@@ -96,7 +96,7 @@ const ProductPage = () => {
                       />
                     </td>
                     <td>
-                        <Link to="/detail">
+                        <Link to={`/detail/${item.id}/title/${item.title}`}>
                             <BsEyeFill />
                         </Link>
                     </td>
