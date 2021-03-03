@@ -1,20 +1,28 @@
-import React from "react"
-import {} from 'react-router-dom'
-import { Navbar, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap'
-import { NavLink } from "react-router-dom";
+import React from "react";
+import {} from "react-router-dom";
+import {
+  Navbar,
+  Nav,
+  NavDropdown,
+  Form,
+  FormControl,
+  Button,
+} from "react-bootstrap";
+import { NavLink, useHistory } from "react-router-dom";
 const NavBar = () => {
+  const history = useHistory();
   return (
     <>
       <Navbar bg="success" expand="lg">
         <NavLink className="navbar-brand" to="/" exact>
-        <img
+          <img
             src="./logo192.png"
             width="30"
             height="30"
             className="d-inline-block align-top"
             alt="React Bootstrap logo"
-        />
-        {' '}Suttipong
+          />{" "}
+          Suttipong
         </NavLink>
         {/* <Navbar.Brand href="#home">
 
@@ -24,23 +32,36 @@ const NavBar = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
             <NavLink className="nav-link" to="/" exact activeClassName="active">
-            Suttipong HOME
+              Suttipong HOME
             </NavLink>
-            <NavLink className="nav-link" to="/about"  activeClassName="active">
-            เกี่ยวกับเรา
+            <NavLink className="nav-link" to="/about" activeClassName="active">
+              เกี่ยวกับเรา
             </NavLink>
-            <NavLink className="nav-link" to="/product"  activeClassName="active">
-            สินค้า
+            <NavLink
+              className="nav-link"
+              to="/product"
+              activeClassName="active"
+            >
+              สินค้า
             </NavLink>
-            <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Another action
+            <NavDropdown
+              title="workshop (Pagination + CRUD)"
+              id="basic-nav-dropdown"
+            >
+              <NavDropdown.Item
+                onClick={() => {
+                  history.replace("/hospital");
+                }}
+              >
+                ข้อมูลสถานพยาบาล (Pagination)
               </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                Separated link
+              <NavDropdown.Item
+                onClick={() => {
+                  history.replace("/category");
+                }}
+              >
+                หมวดหมู่ข่าว (CRUD)
               </NavDropdown.Item>
             </NavDropdown>
           </Nav>
