@@ -1,7 +1,47 @@
 import React from "react";
-import { BsFillAwardFill, BsPower , BsPlug } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import { useQuery } from "react-query";
+import { Spinner } from "react-bootstrap";
 const HomePage = () => {
+  // const { isLoading, error, data, isFetching } = useQuery("repoData", () =>
+  //   fetch(
+  //     "https://api.codingthailand.com/api/news"
+  //   ).then((res) => res.json())
+  // );
+
+  const query = useQuery("repoData", () => {
+    const controller = new AbortController();
+    const signal = controller.signal;
+      const promise =  fetch(
+        "https://api.codingthailand.com/api/news",{
+          method : 'get',
+          signal : signal
+        }
+      ).then((res) => res.json());
+        
+      //cancel request
+      promise.cancel = () => controller.abort();
+      return promise;
+    }
+  );
+  const { isLoading, error, data, isFetching } = query;
+  
+  if (isLoading === true) {
+    return (
+      <div className="text-center mt-5">
+        <Spinner animation="border" variant="success" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="text-center mt-5 text-danger">
+        <p>เกิดข้อผิดพลาด</p>
+        <p>{JSON.stringify(error)}</p>
+      </div>
+    );
+  }
   return (
     <>
       <main role="main">
@@ -9,12 +49,14 @@ const HomePage = () => {
         <div className="jumbotron">
           <div className="container">
             <h1 className="display-3">Welcome</h1>
+            <p>พัฒนาด้วย React v.2</p>
             <p>
-              พัฒนาด้วย React
-            </p>
-            <p>
-              <Link to="/product" className="btn btn-primary btn-lg" role="button">
-              สินค้าทั้งหมด
+              <Link
+                to="/product"
+                className="btn btn-primary btn-lg"
+                role="button"
+              >
+                สินค้าทั้งหมด
               </Link>
             </p>
           </div>
@@ -22,48 +64,24 @@ const HomePage = () => {
         <div className="container">
           {/* Example row of columns */}
           <div className="row">
-            <div className="col-md-4">
-              <h2>Heading         <BsFillAwardFill color='red' size='2em' /></h2>
-              <p>
-                Donec id elit non mi porta gravida at eget metus. Fusce dapibus,
-                tellus ac cursus commodo, tortor mauris condimentum nibh, ut
-                fermentum massa justo sit amet risus. Etiam porta sem malesuada
-                magna mollis euismod. Donec sed odio dui.{" "}
-              </p>
-              <p>
-                <a className="btn btn-secondary" href="#" role="button">
-                  View details »
-                </a>
-              </p>
+            <div className="text-center">
+              {isFetching ? 'Updating' : null}
             </div>
-            <div className="col-md-4">
-              <h2>Heading <BsPower color="blue" size='2em' /></h2>
-              <p>
-                Donec id elit non mi porta gravida at eget metus. Fusce dapibus,
-                tellus ac cursus commodo, tortor mauris condimentum nibh, ut
-                fermentum massa justo sit amet risus. Etiam porta sem malesuada
-                magna mollis euismod. Donec sed odio dui.{" "}
-              </p>
-              <p>
-                <a className="btn btn-secondary" href="#" role="button">
-                  View details »
-                </a>
-              </p>
-            </div>
-            <div className="col-md-4">
-              <h2>Heading <BsPlug color="orange" size='2em' /></h2>
-              <p>
-                Donec sed odio dui. Cras justo odio, dapibus ac facilisis in,
-                egestas eget quam. Vestibulum id ligula porta felis euismod
-                semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris
-                condimentum nibh, ut fermentum massa justo sit amet risus.
-              </p>
-              <p>
-                <a className="btn btn-secondary" href="#" role="button">
-                  View details »
-                </a>
-              </p>
-            </div>
+            {
+              data.data.map((news, index) => {
+                return (
+                  <div className="col-md-4" key={news.id}>
+                    <h2>{news.topic}</h2>
+                    <p>
+                      {news.detail}
+                    </p>
+                    <p>
+                      หมวดหมู่ : {news.name}
+                    </p>
+                  </div>
+                )
+              })
+            }
           </div>
           <hr />
         </div>{" "}
