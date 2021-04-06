@@ -6,12 +6,16 @@ import {
   Route
 } from "react-router-dom"
 import Footer from './components/Footer'
-import HospitalPage from './components/Hospital/HospitalPage'
+import HospitalPage from './pages/Hospital/HospitalPage'
 import NavBar from './components/NavBar'
 import AboutePage from './pages/AboutePage'
 import DetailPage from './pages/DetailPage'
 import HomePage from './pages/HomePage'
+import IndexPage from './pages/Category/indexPage'
 import ProductPage from './pages/ProductPage'
+import CreatePage from './pages/Category/CreatePage'
+import EditPage from './pages/Category/EditPage'
+
 const queryClient = new QueryClient()
 function App() {
   return (
@@ -33,6 +37,24 @@ function App() {
         </Route>
         <Route path="/hospital">
           <HospitalPage />
+        </Route>
+        <Route path="/category"
+          render={({match : {url}}) => (
+            <>
+            <Route path={`${url}/`} exact>
+              <IndexPage />
+            </Route>
+
+            <Route path={`${url}/create`} >
+              <CreatePage />
+            </Route>
+            <Route path={`${url}/edit/:id`} >
+              <EditPage />
+            </Route>
+            </>
+          )}
+        >
+        
         </Route>
       </Switch>
     <Footer />
