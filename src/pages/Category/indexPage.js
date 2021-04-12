@@ -76,10 +76,17 @@ const IndexPage = () => {
                     <td>{item.id}</td>
                     <td>{item.name}</td>
                     <td>
-                      <Button className="ml-2" variant="outline-info">
+                      <Button className="ml-2" variant="outline-info" onClick={() => history.push(`/category/edit/${item.id}`)}>
                         <BsPencil />
                       </Button>
-                      <Button className="ml-2" variant="outline-danger">
+                      <Button className="ml-2" variant="outline-danger" onClick={async () => {
+                        const isConfirm = window.confirm(`ต้องการลบ ${item.name} ?`);
+                        if(isConfirm){
+                          const resp = await axios.delete(`https://api.codingthailand.com/api/category/${item.id}`);
+                          alert(resp.data.message);
+                          history.go(0);
+                        }
+                      }}>
                         <BsTrash />
                       </Button>
                     </td>
