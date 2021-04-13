@@ -13,6 +13,10 @@ import ProductPage from "./pages/ProductPage";
 import CreatePage from "./pages/Category/CreatePage";
 import EditPage from "./pages/Category/EditPage";
 import UploadPage from "./pages/UploadPage";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
+import MemberPage from "./pages/MemberPage";
+import PrivateRoute from "./guard/auth";
 
 const queryClient = new QueryClient();
 function App() {
@@ -20,7 +24,7 @@ function App() {
     <ToastProvider
       placement="bottom-center"
       autoDismiss
-      autoDismissTimeout={3*1000}
+      autoDismissTimeout={3 * 1000}
     >
       <QueryClientProvider client={queryClient}>
         <Router>
@@ -44,6 +48,15 @@ function App() {
             <Route path="/upload">
               <UploadPage />
             </Route>
+            <Route path="/login">
+              <LoginPage />
+            </Route>
+            <Route path="/register">
+              <RegisterPage />
+            </Route>
+            <PrivateRoute path="/member">
+              <MemberPage />
+            </PrivateRoute>
             <Route
               path="/category"
               render={({ match: { url } }) => (
