@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/ReactLearn/static/css/main.afd7172b.chunk.css",
+    "main.js": "/ReactLearn/static/js/main.61f5c09b.chunk.js",
+    "main.js.map": "/ReactLearn/static/js/main.61f5c09b.chunk.js.map",
+    "runtime-main.js": "/ReactLearn/static/js/runtime-main.7dc7c954.js",
+    "runtime-main.js.map": "/ReactLearn/static/js/runtime-main.7dc7c954.js.map",
+    "static/css/2.2295ac45.chunk.css": "/ReactLearn/static/css/2.2295ac45.chunk.css",
+    "static/js/2.71351c70.chunk.js": "/ReactLearn/static/js/2.71351c70.chunk.js",
+    "static/js/2.71351c70.chunk.js.map": "/ReactLearn/static/js/2.71351c70.chunk.js.map",
+    "static/js/3.055f6fa7.chunk.js": "/ReactLearn/static/js/3.055f6fa7.chunk.js",
+    "static/js/3.055f6fa7.chunk.js.map": "/ReactLearn/static/js/3.055f6fa7.chunk.js.map",
+    "index.html": "/ReactLearn/index.html",
+    "static/css/2.2295ac45.chunk.css.map": "/ReactLearn/static/css/2.2295ac45.chunk.css.map",
+    "static/css/main.afd7172b.chunk.css.map": "/ReactLearn/static/css/main.afd7172b.chunk.css.map",
+    "static/js/2.71351c70.chunk.js.LICENSE.txt": "/ReactLearn/static/js/2.71351c70.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.7dc7c954.js",
+    "static/css/2.2295ac45.chunk.css",
+    "static/js/2.71351c70.chunk.js",
+    "static/css/main.afd7172b.chunk.css",
+    "static/js/main.61f5c09b.chunk.js"
+  ]
+}
