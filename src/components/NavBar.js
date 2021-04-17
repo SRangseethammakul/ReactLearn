@@ -2,24 +2,43 @@ import React from "react";
 import {} from "react-router-dom";
 import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 import { NavLink, useHistory } from "react-router-dom";
+import { UserStoreContext } from "../context/UserContext";
+
 const NavBar = () => {
   const history = useHistory();
-  const [profile, setProfile] = React.useState(null);
+  // const [profile, setProfile] = React.useState(null);
+  const userStore = React.useContext(UserStoreContext);
+
+  const getProfile = () => {
+    const profileValue = JSON.parse(localStorage.getItem("profile"));
+    if (profileValue) {
+      userStore.updateProfile(profileValue);
+    }
+  };
+
+  React.useEffect(() => {
+    getProfile();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+/* old version no context
   const getProfile = () => {
     const profileValue = JSON.parse(localStorage.getItem("profile"));
     if (profileValue) {
       setProfile(profileValue);
     }
   };
+
   React.useEffect(() => {
     console.log("useeffect navbar");
     getProfile();
   }, []);
+  */
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("profile");
     history.replace('/');
-    history.go(0);
+    // history.go(0);
+    userStore.updateProfile(null);
   };
   return (
     <>
@@ -82,9 +101,9 @@ const NavBar = () => {
             </NavLink>
           </Nav>
 
-          {profile ? (
+          {userStore.profile ? (
             <span className="navbar-text text-white">
-              ยินดีต้อนรับ {profile.name} Role : {profile.role}
+              ยินดีต้อนรับ {userStore.profile.name} Role : {userStore.profile.role}
               <button className="btn btn-danger ml-2" onClick={logout}>
                 Log out
               </button>

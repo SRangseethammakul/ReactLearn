@@ -6,6 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useHistory } from "react-router-dom";
 import * as yup from "yup";
 import { useToasts } from "react-toast-notifications";
+import { UserStoreContext } from "../context/UserContext";
 const schema = yup.object().shape({
   email: yup.string().required("insert email").email("insert email format"),
   password: yup.string().required("insert password").min(3, 'password 3 ตัว'),
@@ -13,6 +14,7 @@ const schema = yup.object().shape({
 const LoginPage = () => {
     const { addToast } = useToasts();
     let history = useHistory();
+    const userStore = React.useContext(UserStoreContext);
   const {
     register,
     handleSubmit,
@@ -41,8 +43,13 @@ const LoginPage = () => {
 
         addToast('Login Success', { appearance: 'success'});
         // history.go(0);
+        // history.go(0);
+        
+        //update profile by context
+        const profileValue = JSON.parse(localStorage.getItem('profile'));
+        userStore.updateProfile(profileValue); 
         history.replace('/');
-        history.go(0);
+
     }catch(error){
         addToast(error.response.data.message, { appearance: 'error'});
     }

@@ -1,6 +1,7 @@
 import React from "react";
 import { ToastProvider } from "react-toast-notifications";
 import { QueryClient, QueryClientProvider } from "react-query";
+import UserStoreProvider from "./context/UserContext";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Footer from "./components/Footer";
 import HospitalPage from "./pages/Hospital/HospitalPage";
@@ -21,6 +22,9 @@ import PrivateRoute from "./guard/auth";
 const queryClient = new QueryClient();
 function App() {
   return (
+    <UserStoreProvider>
+
+    
     <ToastProvider
       placement="bottom-center"
       autoDismiss
@@ -79,6 +83,7 @@ function App() {
         </Router>
       </QueryClientProvider>
     </ToastProvider>
+    </UserStoreProvider>
   );
 }
 
