@@ -23,6 +23,7 @@ import PrivateRoute from "./guard/auth";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
 import rootReducer from "./redux/reusers/index";
+import CartPage from "./pages/CartPage";
 
 const store = createStore(rootReducer);
 const queryClient = new QueryClient();
@@ -62,6 +63,9 @@ function App() {
                 </Route>
                 <Route path="/register">
                   <RegisterPage />
+                </Route>
+                <Route path="/cart">
+                  <CartPage />
                 </Route>
                 <PrivateRoute path="/member">
                   <MemberPage />

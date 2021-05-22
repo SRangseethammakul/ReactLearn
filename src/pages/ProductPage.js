@@ -5,11 +5,21 @@ import { format } from "date-fns";
 import { th } from "date-fns/locale";
 import { BsEyeFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
+
+//redux
+import { addToCart } from "../redux/actions/cartAction";
+import { useDispatch, useSelector } from "react-redux";
+
 const ProductPage = () => {
   const [product, setProduct] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
   const [error, SetError] = React.useState(null);
   const cancelToken = React.useRef(null); //ไม่มีผลต่อการ rerender เรียกว่า useref
+
+  //redux
+  const dispatch = useDispatch();
+  const cart = useSelector((state) => state.cartReducer.cart);
+  const total = useSelector((state) => state.cartReducer.total);
   const getData = async () => {
     try {
       setLoading(true);
@@ -29,10 +39,10 @@ const ProductPage = () => {
   };
   React.useEffect(() => {
     cancelToken.current = axios.CancelToken.source();
-    getData()
+    getData();
     return () => {
-      console.log("Exit Product Page")
-      cancelToken.current.cancel()
+      console.log("Exit Product Page");
+      cancelToken.current.cancel();
     };
   }, []);
 
@@ -53,11 +63,26 @@ const ProductPage = () => {
     );
   }
 
+  const addCart = (product) => {
+    // console.log(product);
+    const item = {
+      id: product.id,
+      name: product.title,
+      price: product.view, //assume to price
+      qty: 1,
+    };
+    //call action
+    dispatch(addToCart(item, cart));
+  };
+
   return (
     <div className="container">
       <div className="row mt-4">
         <div className="col-md-12">
           <h2>Product</h2>
+          {
+            total > 0 && <h4> ซื้อแล้ว {total} .</h4>
+          }
           <Table striped bordered hover>
             <thead>
               <tr>
@@ -96,9 +121,15 @@ const ProductPage = () => {
                       />
                     </td>
                     <td>
-                        <Link to={`/detail/${item.id}/title/${item.title}`}>
-                            <BsEyeFill />
-                        </Link>
+                      <Link to={`/detail/${item.id}/title/${item.title}`}>
+                        <BsEyeFill />
+                      </Link>
+                      <button
+                        onClick={() => addCart(item)}
+                        className="btn btn-outline-success ml-2"
+                      >
+                        add to cart
+                      </button>
                     </td>
                   </tr>
                 );

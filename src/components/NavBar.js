@@ -12,6 +12,7 @@ const NavBar = () => {
   // const userStore = React.useContext(UserStoreContext);
   //redux
   const profileRedux = useSelector((state) => state.authReducer.profile);
+  const total = useSelector((state) => state.cartReducer.total);
   const dispatch = useDispatch();
 
   // const getProfile = () => {
@@ -79,6 +80,9 @@ const NavBar = () => {
             </NavLink>
             <NavLink className="nav-link" to="/about" activeClassName="active">
               เกี่ยวกับเรา
+            </NavLink>
+            <NavLink className="nav-link" to="/cart" activeClassName="active">
+              Cart {total} ชิ้น
             </NavLink>
             <NavLink
               className="nav-link"
