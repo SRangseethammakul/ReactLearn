@@ -2,12 +2,15 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useQuery } from "react-query";
 import { Spinner } from "react-bootstrap";
+// import { useSelector } from "react-redux";
 const HomePage = () => {
   // const { isLoading, error, data, isFetching } = useQuery("repoData", () =>
   //   fetch(
   //     "https://api.codingthailand.com/api/news"
   //   ).then((res) => res.json())
   // );
+  //redux
+  // const profileRedux = useSelector((state) => state.authReducer.profile);
 
   const query = useQuery("repoData", () => {
     const controller = new AbortController();
@@ -50,6 +53,7 @@ const HomePage = () => {
           <div className="container">
             <h1 className="display-3">Welcome</h1>
             <p>พัฒนาด้วย React v.2</p>
+            {/* {profileRedux.name} */}
             <p>
               <Link
                 to="/product"

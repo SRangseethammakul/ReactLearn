@@ -2,17 +2,30 @@ import React from "react";
 import {} from "react-router-dom";
 import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 import { NavLink, useHistory } from "react-router-dom";
-import { UserStoreContext } from "../context/UserContext";
+// import { UserStoreContext } from "../context/UserContext";
+import { useSelector, useDispatch } from "react-redux";
+import { updateProfile } from "../redux/actions/authAction";
 
 const NavBar = () => {
   const history = useHistory();
   // const [profile, setProfile] = React.useState(null);
-  const userStore = React.useContext(UserStoreContext);
+  // const userStore = React.useContext(UserStoreContext);
+  //redux
+  const profileRedux = useSelector((state) => state.authReducer.profile);
+  const dispatch = useDispatch();
 
+  // const getProfile = () => {
+  //   const profileValue = JSON.parse(localStorage.getItem("profile"));
+  //   if (profileValue) {
+  //     userStore.updateProfile(profileValue);
+  //   }
+  // };
+
+  //redux
   const getProfile = () => {
     const profileValue = JSON.parse(localStorage.getItem("profile"));
     if (profileValue) {
-      userStore.updateProfile(profileValue);
+      dispatch(updateProfile(profileValue));
     }
   };
 
@@ -20,7 +33,7 @@ const NavBar = () => {
     getProfile();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-/* old version no context
+  /* old version no context
   const getProfile = () => {
     const profileValue = JSON.parse(localStorage.getItem("profile"));
     if (profileValue) {
@@ -36,9 +49,10 @@ const NavBar = () => {
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("profile");
-    history.replace('/');
+    history.replace("/");
     // history.go(0);
-    userStore.updateProfile(null);
+    // userStore.updateProfile(null);
+    dispatch(updateProfile(null));
   };
   return (
     <>
@@ -101,9 +115,11 @@ const NavBar = () => {
             </NavLink>
           </Nav>
 
-          {userStore.profile ? (
+          {profileRedux ? (
             <span className="navbar-text text-white">
-              ยินดีต้อนรับ {userStore.profile.name} Role : {userStore.profile.role}
+              ยินดีต้อนรับ
+              {/* {userStore.profile.name} Role :{" "} {userStore.profile.role} */}
+              {profileRedux.name} Role : {profileRedux.role}
               <button className="btn btn-danger ml-2" onClick={logout}>
                 Log out
               </button>

@@ -6,15 +6,20 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useHistory } from "react-router-dom";
 import * as yup from "yup";
 import { useToasts } from "react-toast-notifications";
-import { UserStoreContext } from "../context/UserContext";
+// import { UserStoreContext } from "../context/UserContext";
+import { updateProfile } from "../redux/actions/authAction";
+import { useDispatch } from "react-redux";
 const schema = yup.object().shape({
   email: yup.string().required("insert email").email("insert email format"),
-  password: yup.string().required("insert password").min(3, 'password 3 ตัว'),
+  password: yup.string().required("insert password").min(3, "password 3 ตัว"),
 });
 const LoginPage = () => {
-    const { addToast } = useToasts();
-    let history = useHistory();
-    const userStore = React.useContext(UserStoreContext);
+  const { addToast } = useToasts();
+  let history = useHistory();
+  // const userStore = React.useContext(UserStoreContext);
+
+  //call reduc action
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
@@ -24,34 +29,40 @@ const LoginPage = () => {
   });
   const onSubmit = async (data) => {
     // console.log(data);
-    try{
-        const apiUrl = "https://api.codingthailand.com/api/login";
-        const resp = await axios.post(apiUrl, {
-          email : data.email,
-          password : data.password
-        });
-        localStorage.setItem('token', JSON.stringify(resp.data));
+    try {
+      const apiUrl = "https://api.codingthailand.com/api/login";
+      const resp = await axios.post(apiUrl, {
+        email: data.email,
+        password: data.password,
+      });
+      localStorage.setItem("token", JSON.stringify(resp.data));
 
-        //get profile
-        const urlProfile = 'https://api.codingthailand.com/api/profile';
-        const resProfile = await axios.get(urlProfile, {
-            headers: { 
-                'Authorization': `Bearer ${resp.data.access_token}` 
-            }
-          });
-        localStorage.setItem('profile', JSON.stringify(resProfile.data.data.user));
+      //get profile
+      const urlProfile = "https://api.codingthailand.com/api/profile";
+      const resProfile = await axios.get(urlProfile, {
+        headers: {
+          Authorization: `Bearer ${resp.data.access_token}`,
+        },
+      });
+      localStorage.setItem(
+        "profile",
+        JSON.stringify(resProfile.data.data.user)
+      );
 
-        addToast('Login Success', { appearance: 'success'});
-        // history.go(0);
-        // history.go(0);
-        
-        //update profile by context
-        const profileValue = JSON.parse(localStorage.getItem('profile'));
-        userStore.updateProfile(profileValue); 
-        history.replace('/');
+      addToast("Login Success", { appearance: "success" });
+      // history.go(0);
+      // history.go(0);
 
-    }catch(error){
-        addToast(error.response.data.message, { appearance: 'error'});
+      //update profile by context
+      const profileValue = JSON.parse(localStorage.getItem("profile"));
+      // userStore.updateProfile(profileValue); //use context
+
+      //call action
+      dispatch(updateProfile(profileValue));
+      history.replace("/");
+    } catch (error) {
+      console.log(error);
+      addToast(error.response.data.message, { appearance: "error" });
     }
   };
   return (
@@ -80,7 +91,9 @@ const LoginPage = () => {
                   type="password"
                   name="password"
                   ref={register}
-                  className={`form-control ${errors.password ? "is-invalid" : ""}`}
+                  className={`form-control ${
+                    errors.password ? "is-invalid" : ""
+                  }`}
                 />
                 {errors.password && (
                   <Form.Control.Feedback type="invalid">

@@ -19,71 +19,77 @@ import RegisterPage from "./pages/RegisterPage";
 import MemberPage from "./pages/MemberPage";
 import PrivateRoute from "./guard/auth";
 
+//resux setup
+import { Provider } from "react-redux";
+import { createStore } from "redux";
+import rootReducer from "./redux/reusers/index";
+
+const store = createStore(rootReducer);
 const queryClient = new QueryClient();
 function App() {
   return (
-    <UserStoreProvider>
+    <Provider store={store}>
+      <UserStoreProvider>
+        <ToastProvider
+          placement="bottom-center"
+          autoDismiss
+          autoDismissTimeout={3 * 1000}
+        >
+          <QueryClientProvider client={queryClient}>
+            <Router>
+              <NavBar />
+              <Switch>
+                <Route exact path="/">
+                  <HomePage />
+                </Route>
+                <Route path="/about">
+                  <AboutePage />
+                </Route>
+                <Route path="/product">
+                  <ProductPage />
+                </Route>
+                <Route path="/detail/:id/title/:title">
+                  <DetailPage />
+                </Route>
+                <Route path="/hospital">
+                  <HospitalPage />
+                </Route>
+                <Route path="/upload">
+                  <UploadPage />
+                </Route>
+                <Route path="/login">
+                  <LoginPage />
+                </Route>
+                <Route path="/register">
+                  <RegisterPage />
+                </Route>
+                <PrivateRoute path="/member">
+                  <MemberPage />
+                </PrivateRoute>
+                <Route
+                  path="/category"
+                  render={({ match: { url } }) => (
+                    <>
+                      <Route path={`${url}/`} exact>
+                        <IndexPage />
+                      </Route>
 
-    
-    <ToastProvider
-      placement="bottom-center"
-      autoDismiss
-      autoDismissTimeout={3 * 1000}
-    >
-      <QueryClientProvider client={queryClient}>
-        <Router>
-          <NavBar />
-          <Switch>
-            <Route exact path="/">
-              <HomePage />
-            </Route>
-            <Route path="/about">
-              <AboutePage />
-            </Route>
-            <Route path="/product">
-              <ProductPage />
-            </Route>
-            <Route path="/detail/:id/title/:title">
-              <DetailPage />
-            </Route>
-            <Route path="/hospital">
-              <HospitalPage />
-            </Route>
-            <Route path="/upload">
-              <UploadPage />
-            </Route>
-            <Route path="/login">
-              <LoginPage />
-            </Route>
-            <Route path="/register">
-              <RegisterPage />
-            </Route>
-            <PrivateRoute path="/member">
-              <MemberPage />
-            </PrivateRoute>
-            <Route
-              path="/category"
-              render={({ match: { url } }) => (
-                <>
-                  <Route path={`${url}/`} exact>
-                    <IndexPage />
-                  </Route>
-
-                  <Route path={`${url}/create`}>
-                    <CreatePage />
-                  </Route>
-                  <Route path={`${url}/edit/:id`}>
-                    <EditPage />
-                  </Route>
-                </>
-              )}
-            ></Route>
-          </Switch>
-          <Footer />
-        </Router>
-      </QueryClientProvider>
-    </ToastProvider>
-    </UserStoreProvider>
+                      <Route path={`${url}/create`}>
+                        <CreatePage />
+                      </Route>
+                      <Route path={`${url}/edit/:id`}>
+                        <EditPage />
+                      </Route>
+                    </>
+                  )}
+                ></Route>
+              </Switch>
+              <Footer />
+            </Router>
+          </QueryClientProvider>
+        </ToastProvider>
+      </UserStoreProvider>
+    </Provider>
   );
 }
 
