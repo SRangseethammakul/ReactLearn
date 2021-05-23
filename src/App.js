@@ -21,11 +21,14 @@ import PrivateRoute from "./guard/auth";
 
 //resux setup
 import { Provider } from "react-redux";
-import { createStore } from "redux";
-import rootReducer from "./redux/reusers/index";
-import CartPage from "./pages/CartPage";
+// import { createStore } from "redux";
 
-const store = createStore(rootReducer);
+import CartPage from "./pages/CartPage";
+// import rootReducer from "./redux/reducers/index";
+// const store = createStore(rootReducer);
+
+import configureStore from './redux/configureStore'
+const {store} = configureStore();
 const queryClient = new QueryClient();
 function App() {
   return (

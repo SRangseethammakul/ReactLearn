@@ -1,10 +1,12 @@
 import React from "react";
 import { Table } from "react-bootstrap";
 //redux
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { clearAllCart } from "../redux/actions/cartAction";
 const CartPage = () => {
   const cart = useSelector((state) => state.cartReducer.cart);
   const total = useSelector((state) => state.cartReducer.total);
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -12,6 +14,14 @@ const CartPage = () => {
         <div className="row mt-4">
           <div className="col-md-12">
             <h2>Cart : total {total}</h2>
+            <button
+              onClick={() => {
+                dispatch(clearAllCart());
+              }}
+              className="btn btn-danger btn-sm mb-3"
+            >
+              Delete All
+            </button>
             <Table striped bordered hover>
               <thead>
                 <tr>
