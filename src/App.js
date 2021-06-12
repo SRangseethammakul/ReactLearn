@@ -17,6 +17,7 @@ import UploadPage from "./pages/UploadPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import MemberPage from "./pages/MemberPage";
+import PdfReport from "./pages/report/PdfReport";
 import PrivateRoute from "./guard/auth";
 
 //resux setup
@@ -26,6 +27,11 @@ import { Provider } from "react-redux";
 import CartPage from "./pages/CartPage";
 // import rootReducer from "./redux/reducers/index";
 // const store = createStore(rootReducer);
+
+//use redux thunk
+// import { createStore, applyMiddleware } from 'redux';
+// import thunk from 'redux-thunk';
+// const store = createStore(rootReducer, applyMiddleware(thunk));
 
 import configureStore from './redux/configureStore'
 const {store} = configureStore();
@@ -63,6 +69,9 @@ function App() {
                 </Route>
                 <Route path="/login">
                   <LoginPage />
+                </Route>
+                <Route path="/pdf">
+                  <PdfReport />
                 </Route>
                 <Route path="/register">
                   <RegisterPage />

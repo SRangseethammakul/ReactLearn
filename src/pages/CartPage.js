@@ -1,5 +1,6 @@
 import React from "react";
 import { Table } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 //redux
 import { useSelector, useDispatch } from "react-redux";
 import { clearAllCart } from "../redux/actions/cartAction";
@@ -7,6 +8,7 @@ const CartPage = () => {
   const cart = useSelector((state) => state.cartReducer.cart);
   const total = useSelector((state) => state.cartReducer.total);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   return (
     <>
@@ -21,6 +23,14 @@ const CartPage = () => {
               className="btn btn-danger btn-sm mb-3"
             >
               Delete All
+            </button>
+            <button
+              onClick={() => {
+                history.push('/pdf');
+              }}
+              className="btn btn-success btn-sm mb-3 ml-4"
+            >
+              Export PDF
             </button>
             <Table striped bordered hover>
               <thead>
