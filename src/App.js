@@ -46,7 +46,7 @@ function App() {
           autoDismissTimeout={3 * 1000}
         >
           <QueryClientProvider client={queryClient}>
-            <Router>
+            <Router basename="/ReactLearn">
               <NavBar />
               <Switch>
                 <Route exact path="/">

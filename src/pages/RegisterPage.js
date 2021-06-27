@@ -9,11 +9,11 @@ import { useToasts } from "react-toast-notifications";
 const schema = yup.object().shape({
   name: yup.string().required("insert name"),
   email: yup.string().required("insert email").email("insert email format"),
-  password: yup.string().required("insert password").min(3, 'password 3 ตัว'),
+  password: yup.string().required("insert password").min(3, "password 3 ตัว"),
 });
 const RegisterPage = () => {
-    const { addToast } = useToasts();
-    let history = useHistory();
+  const { addToast } = useToasts();
+  let history = useHistory();
   const {
     register,
     handleSubmit,
@@ -23,18 +23,18 @@ const RegisterPage = () => {
   });
   const onSubmit = async (data) => {
     // console.log(data);
-    try{
-        const apiUrl = "https://api.codingthailand.com/api/register";
-        const resp = await axios.post(apiUrl, {
-          name: data.name,
-          email : data.email,
-          password : data.password
-        });
-        addToast(resp.data.message, { appearance: 'success'});
-        history.replace('/login');
-        console.log(resp);
-    }catch(error){
-        addToast(error.response.data.errors.email[0], { appearance: 'error'});
+    try {
+      const apiUrl = "https://api.codingthailand.com/api/register";
+      const resp = await axios.post(apiUrl, {
+        name: data.name,
+        email: data.email,
+        password: data.password,
+      });
+      addToast(resp.data.message, { appearance: "success" });
+      history.replace("/login");
+      console.log(resp);
+    } catch (error) {
+      addToast(error.response.data.errors.email[0], { appearance: "error" });
     }
   };
   return (
@@ -77,7 +77,9 @@ const RegisterPage = () => {
                   type="password"
                   name="password"
                   ref={register}
-                  className={`form-control ${errors.password ? "is-invalid" : ""}`}
+                  className={`form-control ${
+                    errors.password ? "is-invalid" : ""
+                  }`}
                 />
                 {errors.password && (
                   <Form.Control.Feedback type="invalid">
